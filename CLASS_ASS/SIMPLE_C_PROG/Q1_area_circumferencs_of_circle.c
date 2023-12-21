@@ -10,7 +10,7 @@ int main(){
 	
 	
 	area = 3.14*pow(radies,2);
-	circumference = 2*3.4*radies;
+	circumference = 2*3.14*radies;
 	
 
 	printf("area of circle is:%.2f\ncircumference of circle is:%.2f",area,circumference);
