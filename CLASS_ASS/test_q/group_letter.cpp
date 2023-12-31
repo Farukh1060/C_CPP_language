@@ -2,20 +2,20 @@
 using namespace std;
 int main(){
     string name;
-    int num,j=0;
+    int num,count=0;
     cout<<"enter name: ";
     getline(cin,name);
     cout<<"enter no to group: ";
     cin>>num;
     
     for(int i=0;i<name.length();i++){
-        if(num!=j){
+        if(num!=count){
              cout<<name[i];
-             j++;
-        }else if(num==j){
+             count++;
+        }else if(num==count){
             cout<<endl;
              cout<<name[i];
-            j=1;
+            count=1;
         }
         
     }
