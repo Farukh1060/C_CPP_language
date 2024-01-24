@@ -1,0 +1,105 @@
+mysql> show tables from company;
++-------------------+
+| Tables_in_company |
++-------------------+
+| customer          |
+| item_must         |
+| orders            |
+| salespeople       |
+| salesperson       |
++-------------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from item_must;
++--------+------------------+-----------+---------+
+| PRO_ID | PRO_NAME         | PRO_PRICE | PRO_COM |
++--------+------------------+-----------+---------+
+|    101 | Mother Board     |   3200.00 |      15 |
+|    102 | Key Board        |    450.00 |      16 |
+|    103 | ZIP drive        |    250.00 |      14 |
+|    104 | Speaker          |    550.00 |      16 |
+|    105 | Monitor          |   5000.00 |      11 |
+|    106 | DVD drive        |    900.00 |      12 |
+|    107 | CD drive         |    800.00 |      12 |
+|    108 | Printer          |   2600.00 |      13 |
+|    109 | Refill cartridge |    350.00 |      13 |
+|    110 | Mouse            |    250.00 |      12 |
++--------+------------------+-----------+---------+
+
+● Write sql query to find the items whose prices are higher than or equal 250rs.
+Order the result by product price in descending, then product name in
+ascending. Return pro_name and pro_price
+
+10 rows in set (0.07 sec)
+mysql>  select PRO_NAME,PRO_PRICE
+    -> from item_must
+    -> where PRO_PRICE >= '250'
+    -> order by PRO_PRICE desc, PRO_NAME asc;
++------------------+-----------+
+| PRO_NAME         | PRO_PRICE |
++------------------+-----------+
+| Monitor          |   5000.00 |
+| Mother Board     |   3200.00 |
+| Printer          |   2600.00 |
+| DVD drive        |    900.00 |
+| CD drive         |    800.00 |
+| Speaker          |    550.00 |
+| Key Board        |    450.00 |
+| Refill cartridge |    350.00 |
+| Mouse            |    250.00 |
+| ZIP drive        |    250.00 |
++------------------+-----------+
+10 rows in set (0.05 sec)
+
+● Write a sql query to find the cheapest item. Return pro_name and pro_price.
+
+mysql> select PRO_NAME, PRO_PRICE
+    -> from item_must
+    -> order by PRO_PRICE asc
+    -> limit 1;
++-----------+-----------+
+| PRO_NAME  | PRO_PRICE |
++-----------+-----------+
+| ZIP drive |    250.00 |
++-----------+-----------+
+1 row in set (0.00 sec)
+
+● Write the sql query to calculate the average price of the items for each
+company. Return average price and company code.
+
+mysql> select
+    -> avg(PRO_PRICE) as 'avarage price',
+    -> PRO_COM as 'company code'
+    -> from item_must
+    ->
+    -> group by pro_com;
++---------------+--------------+
+| avarage price | company code |
++---------------+--------------+
+|   3200.000000 |           15 |
+|    500.000000 |           16 |
+|    250.000000 |           14 |
+|   5000.000000 |           11 |
+|    650.000000 |           12 |
+|   1475.000000 |           13 |
++---------------+--------------+
+6 rows in set (0.05 sec)
+
+● Write the sql query to find the average total for all the product mention in the
+table
+
+mysql> select
+    -> avg(PRO_PRICE) as 'average total'
+    -> from item_must;
++---------------+
+| average total |
++---------------+
+|   1435.000000 |
++---------------+
+1 row in set (0.04 sec)
+
+
+
+
+
+
