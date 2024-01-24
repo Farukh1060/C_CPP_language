@@ -1,0 +1,933 @@
+Q1. Create Table Name : Student and Exam
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE DATABASE SCHOOL;
+Query OK, 1 row affected (0.15 sec)
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+5 rows in set (0.08 sec)
+mysql> CREATE TABLE STUDENT(ROLL_NO INT NOT NULL AUTO_INCREMENT,PRIMARY KEY (ROLL_NO),NAME VARCHAR(255),BRANCH VARCHAR(255));
+Query OK, 0 rows affected (1.07 sec)
+
+mysql> DESC STUDENT;
++---------+--------------+------+-----+---------+----------------+
+| Field   | Type         | Null | Key | Default | Extra          |
++---------+--------------+------+-----+---------+----------------+
+| ROLL_NO | int          | NO   | PRI | NULL    | auto_increment |
+| NAME    | varchar(255) | YES  |     | NULL    |                |
+| BRANCH  | varchar(255) | YES  |     | NULL    |                |
++---------+--------------+------+-----+---------+----------------+
+3 rows in set (0.01 sec)
+
+mysql> INSERT INTO STUDENT(
+    -> NAME,BRANCH)
+    -> VALUES('JAY','COMPUTER SCIENCE'),
+    -> ('SUHANI','ELECTRONIC AND COM'),
+    -> ('KRITI','ELECTRONICAND COM');
+Query OK, 3 rows affected (0.14 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+mysql> SELECT * FROM STUDENT;
++---------+--------+--------------------+
+| ROLL_NO | NAME   | BRANCH             |
++---------+--------+--------------------+
+|       1 | JAY    | COMPUTER SCIENCE   |
+|       2 | SUHANI | ELECTRONIC AND COM |
+|       3 | KRITI  | ELECTRONICAND COM  |
++---------+--------+--------------------+
+3 rows in set (0.00 sec)
+mysql> CREATE TABLE EXAM(ROLL_NO INT,FOREIGN KEY(ROLL_NO) REFERENCES STUDENT(ROLL_NO),S_CODE VARCHAR(255),MARKS INT,P_CODE VARCHAR(255));
+Query OK, 0 rows affected (1.21 sec)
+
+mysql> DESC EXAM;
++---------+--------------+------+-----+---------+-------+
+| Field   | Type         | Null | Key | Default | Extra |
++---------+--------------+------+-----+---------+-------+
+| ROLL_NO | int          | YES  | MUL | NULL    |       |
+| S_CODE  | varchar(255) | YES  |     | NULL    |       |
+| MARKS   | int          | YES  |     | NULL    |       |
+| P_CODE  | varchar(255) | YES  |     | NULL    |       |
++---------+--------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+mysql> insert into exam(ROLL_NO,
+    -> S_CODE,MARKS,P_CODE)
+    -> VALUES('1','CS11','50','CS'),
+    -> ('1','CS21','60','CS'),
+    -> ('2','EC101','66','EC'),
+    -> ('2','EC102','70','EC'),
+    -> ('3','EC101','45','EC'),
+    -> ('3','EC102','50','EC');
+Query OK, 6 rows affected (0.36 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM EXAM;
++---------+--------+-------+--------+
+| ROLL_NO | S_CODE | MARKS | P_CODE |
++---------+--------+-------+--------+
+|       1 | CS11   |    50 | CS     |
+|       1 | CS21   |    60 | CS     |
+|       2 | EC101  |    66 | EC     |
+|       2 | EC102  |    70 | EC     |
+|       3 | EC101  |    45 | EC     |
+|       3 | EC102  |    50 | EC     |
++---------+--------+-------+--------+
+6 rows in set (0.00 sec)
+
+Q2.Create table given below: Employee and IncentiveTable
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| school             |
+| sys                |
++--------------------+
+5 rows in set (0.01 sec)
+
+mysql> use school
+Database changed
+mysql> show tables from school;
++------------------+
+| Tables_in_school |
++------------------+
+| employee         |
+| exam             |
+| student          |
++------------------+
+3 rows in set (0.01 sec)
+
+mysql> show employee;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'employee' at line 1
+mysql> desc employee;
++--------------+--------------+------+-----+---------+-------+
+| Field        | Type         | Null | Key | Default | Extra |
++--------------+--------------+------+-----+---------+-------+
+| employee_id  | int          | NO   | PRI | NULL    |       |
+| first_name   | varchar(255) | YES  |     | NULL    |       |
+| last_name    | varchar(255) | YES  |     | NULL    |       |
+| salary       | int          | YES  |     | NULL    |       |
+| joining_date | date         | YES  |     | NULL    |       |
+| depertmant   | varchar(255) | YES  |     | NULL    |       |
++--------------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+  INSERT INTO employee(employee_id, first_name, last_name, salary, joining_date, depertmant)
+    -> VALUES
+    -> ('1', 'john', 'abraham', '1000000', '2013-01-01 00:00:00', 'banking'),
+    -> ('2', 'michal', 'clarke', '800000', '2013-01-01 00:00:00', 'insurance'),
+    -> ('3', 'roy', 'thomas', '700000', '2013-02-01 00:00:00', 'banking'),
+    -> ('4', 'tom', 'jose', '600000', '2013-02-01 00:00:00', 'insurance'),
+    -> ('5', 'jerry', 'pinto', '650000', '2013-02-01 00:00:00', 'incurance'),
+    -> ('6', 'philip', 'mathew', '750000', '2013-01-01 00:00:00', 'services'),
+    -> ('7', 'testname1', '123', '650000', '2013-01-01 00:00:00', 'services'),
+    -> ('8', 'testname2', 'lname%', '600000', '2013-02-01 00:00:00', 'insurance');
+Query OK, 8 rows affected (8.25 sec)
+Records: 8  Duplicates: 0  Warnings: 0
+
+mysql> select * from employee;
++-------------+------------+-----------+---------+--------------+------------+
+| employee_id | first_name | last_name | salary  | joining_date | depertmant |
++-------------+------------+-----------+---------+--------------+------------+
+|           1 | john       | abraham   | 1000000 | 2013-01-01   | banking    |
+|           2 | michal     | clarke    |  800000 | 2013-01-01   | insurance  |
+|           3 | roy        | thomas    |  700000 | 2013-02-01   | banking    |
+|           4 | tom        | jose      |  600000 | 2013-02-01   | insurance  |
+|           5 | jerry      | pinto     |  650000 | 2013-02-01   | incurance  |
+|           6 | philip     | mathew    |  750000 | 2013-01-01   | services   |
+|           7 | testname1  | 123       |  650000 | 2013-01-01   | services   |
+|           8 | testname2  | lname%    |  600000 | 2013-02-01   | insurance  |
++-------------+------------+-----------+---------+--------------+------------+
+8 rows in set (2.71 sec)
+
+mysql> create table incentive(employee_ref_id int primary key auto_increment,incentiv_date date,incentive_amount int);  
+Query OK, 0 rows affected (5.43 sec)
+
+mysql> desc incentive;
++------------------+------+------+-----+---------+----------------+
+| Field            | Type | Null | Key | Default | Extra          |
++------------------+------+------+-----+---------+----------------+
+| employee_ref_id  | int  | NO   | PRI | NULL    | auto_increment |
+| incentiv_date    | date | YES  |     | NULL    |                |
+| incentive_amount | int  | YES  |     | NULL    |                |
++------------------+------+------+-----+---------+----------------+
+3 rows in set (0.87 sec)
+
+mysql> alter table incentive
+    -> drop primary key;
+Query OK, 0 rows affected (2.69 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc incentive;
++------------------+------+------+-----+---------+-------+
+| Field            | Type | Null | Key | Default | Extra |
++------------------+------+------+-----+---------+-------+
+| employee_ref_id  | int  | NO   |     | NULL    |       |
+| incentiv_date    | date | YES  |     | NULL    |       |
+| incentive_amount | int  | YES  |     | NULL    |       |
++------------------+------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+
+mysql> insert into incentive(employee_ref_id,incentiv_date, incentive_amount )
+    -> values('1','2013-2-01','5000'),
+    -> ('2','2013-2-01','3000'),
+    -> ('3','2013-2-01','4000'),
+    -> ('1','2013-1-01','4500'),
+    -> ('2','2013-1-01','3500');
+Query OK, 5 rows affected (0.28 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+
+mysql> select * from incentive;
++-----------------+---------------+------------------+
+| employee_ref_id | incentiv_date | incentive_amount |
++-----------------+---------------+------------------+
+|               1 | 2013-02-01    |             5000 |
+|               2 | 2013-02-01    |             3000 |
+|               3 | 2013-02-01    |             4000 |
+|               1 | 2013-01-01    |             4500 |
+|               2 | 2013-01-01    |             3500 |
++-----------------+---------------+------------------+
+5 rows in set (0.00 sec)
+mysql> select * from employee
+    -> where first_name = 'tom';
++-------------+------------+-----------+--------+--------------+------------+
+| employee_id | first_name | last_name | salary | joining_date | depertmant |
++-------------+------------+-----------+--------+--------------+------------+
+|           4 | tom        | jose      | 600000 | 2013-02-01   | insurance  |
++-------------+------------+-----------+--------+--------------+------------+
+1 row in set (0.00 sec)
+
+
+3. Get First_Name from employee table using Tom name “Employee Name”.
+
+mysql> select * from employee
+    -> where first_name = 'tom';
++-------------+------------+-----------+--------+--------------+------------+
+| employee_id | first_name | last_name | salary | joining_date | depertmant |
++-------------+------------+-----------+--------+--------------+------------+
+|           4 | tom        | jose      | 600000 | 2013-02-01   | insurance  |
++-------------+------------+-----------+--------+--------------+------------+
+1 row in set (0.00 sec)
+
+4. Get FIRST_NAME, Joining Date, and Salary from employee table.
+
+mysql> select first_name,joining_date,salary
+    -> from employee;
++------------+--------------+---------+
+| first_name | joining_date | salary  |
++------------+--------------+---------+
+| john       | 2013-01-01   | 1000000 |
+| michal     | 2013-01-01   |  800000 |
+| roy        | 2013-02-01   |  700000 |
+| tom        | 2013-02-01   |  600000 |
+| jerry      | 2013-02-01   |  650000 |
+| philip     | 2013-01-01   |  750000 |
+| testname1  | 2013-01-01   |  650000 |
+| testname2  | 2013-02-01   |  600000 |
++------------+--------------+---------+
+8 rows in set (0.00 sec)
+
+5. Get all employee details from the employee table order by First_Name
+   Ascending and Salary descending?
+
+mysql> select * from employee
+    -> order by first_name asc;
++-------------+------------+-----------+---------+--------------+------------+
+| employee_id | first_name | last_name | salary  | joining_date | depertmant |
++-------------+------------+-----------+---------+--------------+------------+
+|           5 | jerry      | pinto     |  650000 | 2013-02-01   | insurance  |
+|           1 | john       | abraham   | 1000000 | 2013-01-01   | banking    |
+|           2 | michal     | clarke    |  800000 | 2013-01-01   | insurance  |
+|           6 | philip     | mathew    |  750000 | 2013-01-01   | services   |
+|           3 | roy        | thomas    |  700000 | 2013-02-01   | banking    |
+|           7 | testname1  | 123       |  650000 | 2013-01-01   | services   |
+|           8 | testname2  | lname%    |  600000 | 2013-02-01   | insurance  |
+|           4 | tom        | jose      |  600000 | 2013-02-01   | insurance  |
++-------------+------------+-----------+---------+--------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from employee
+    -> order by salary desc;
++-------------+------------+-----------+---------+--------------+------------+
+| employee_id | first_name | last_name | salary  | joining_date | depertmant |
++-------------+------------+-----------+---------+--------------+------------+
+|           1 | john       | abraham   | 1000000 | 2013-01-01   | banking    |
+|           2 | michal     | clarke    |  800000 | 2013-01-01   | insurance  |
+|           6 | philip     | mathew    |  750000 | 2013-01-01   | services   |
+|           3 | roy        | thomas    |  700000 | 2013-02-01   | banking    |
+|           5 | jerry      | pinto     |  650000 | 2013-02-01   | insurance  |
+|           7 | testname1  | 123       |  650000 | 2013-01-01   | services   |
+|           4 | tom        | jose      |  600000 | 2013-02-01   | insurance  |
+|           8 | testname2  | lname%    |  600000 | 2013-02-01   | insurance  |
++-------------+------------+-----------+---------+--------------+------------+
+8 rows in set (0.00 sec)
+
+6. Get employee details from employee table whose first name contains ‘J’.
+
+mysql> select * from employee
+    -> where first_name like '%j%';
++-------------+------------+-----------+---------+--------------+------------+
+| employee_id | first_name | last_name | salary  | joining_date | depertmant |
++-------------+------------+-----------+---------+--------------+------------+
+|           1 | john       | abraham   | 1000000 | 2013-01-01   | banking    |
+|           5 | jerry      | pinto     |  650000 | 2013-02-01   | insurance  |
++-------------+------------+-----------+---------+--------------+------------+
+2 rows in set (0.00 sec)
+
+
+7. Get department wise maximum salary from employee table 
+8. salary ascending?
+
+mysql> select depertmant,MAX(salary) as max_salary
+    -> from employee
+    -> group by depertmant
+    -> order by max_salary asc;
++------------+------------+
+| depertmant | max_salary |
++------------+------------+
+| services   |     750000 |
+| insurance  |     800000 |
+| banking    |    1000000 |
++------------+------------+
+3 rows in set (0.00 sec)
+
+9. Select first_name, incentive amount from employee and incentives table
+for those employees who have incentives and incentive amount greater than
+3000
+
+mysql> select first_name,incentive_amount
+    -> from employee
+    -> join incentive
+    -> on employee.employee_id = incentive. employee_ref_id
+    -> where  incentive_amount>3000;
++------------+------------------+
+| first_name | incentive_amount |
++------------+------------------+
+| john       |             5000 |
+| roy        |             4000 |
+| john       |             4500 |
+| michal     |             3500 |
++------------+------------------+
+4 rows in set (0.04 sec)
+
+10. Create After Insert trigger on Employee table which insert records in
+viewtable
+
+Database changed
+mysql> show tables from practic;
++-------------------+
+| Tables_in_practic |
++-------------------+
+| employee          |
+| view_table        |
++-------------------+
+2 rows in set (0.37 sec)
+
+mysql> select * from employee;
++-------------+----------------+------------+----------------------+------------+----------+
+| employee_id | employee_name  | department | position             | hire_date  | salary   |
++-------------+----------------+------------+----------------------+------------+----------+
+|           1 | John Doe       | IT         | Software Developer   | 2024-01-23 | 75000.00 |
+|           2 | Jane Smith     | HR         | HR Manager           | 2023-12-15 | 85000.00 |
+|           3 | Bob Johnson    | Finance    | Accountant           | 2024-02-10 | 65000.00 |
+|           4 | Alice Brown    | Marketing  | Marketing Specialist | 2024-03-05 | 70000.00 |
+|           5 | Charlie Wilson | Sales      | Sales Representative | 2023-11-20 | 60000.00 |
++-------------+----------------+------------+----------------------+------------+----------+
+5 rows in set (0.37 sec)
+
+mysql> select * from view_table;
+Empty set (0.26 sec)
+
+mysql> DELIMITER //
+mysql> CREATE TRIGGER after_employee_insert
+    -> AFTER INSERT ON employee
+    -> FOR EACH ROW
+    -> BEGIN
+    ->     INSERT INTO view_table (employee_id, employee_name, department, position, hire_date, salary)
+    ->     VALUES (NEW.employee_id, NEW.employee_name, NEW.department, NEW.position, NEW.hire_date, NEW.salary);
+    -> END;
+    -> //
+Query OK, 0 rows affected (0.81 sec)
+
+mysql> DELIMITER ;
+
+mysql> INSERT INTO employee (employee_id, employee_name, department, position, hire_date, salary)
+    -> VALUES (6, 'Eva Johnson', 'IT', 'Systems Analyst', '2024-04-15', 72000.00);
+ERROR 1364 (HY000): Field 'view_id' doesn't have a default value
+mysql> desc view_table;
++---------------+---------------+------+-----+---------+-------+
+| Field         | Type          | Null | Key | Default | Extra |
++---------------+---------------+------+-----+---------+-------+
+| view_id       | int           | NO   | PRI | NULL    |       |
+| employee_id   | int           | YES  |     | NULL    |       |
+| employee_name | varchar(255)  | YES  |     | NULL    |       |
+| department    | varchar(100)  | YES  |     | NULL    |       |
+| position      | varchar(100)  | YES  |     | NULL    |       |
+| hire_date     | date          | YES  |     | NULL    |       |
+| salary        | decimal(10,2) | YES  |     | NULL    |       |
++---------------+---------------+------+-----+---------+-------+
+7 rows in set (0.39 sec)
+
+mysql> ALTER TABLE view_table
+    -> MODIFY COLUMN view_id INT AUTO_INCREMENT;
+Query OK, 0 rows affected (8.27 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc view_table;
++---------------+---------------+------+-----+---------+----------------+
+| Field         | Type          | Null | Key | Default | Extra          |
++---------------+---------------+------+-----+---------+----------------+
+| view_id       | int           | NO   | PRI | NULL    | auto_increment |
+| employee_id   | int           | YES  |     | NULL    |                |
+| employee_name | varchar(255)  | YES  |     | NULL    |                |
+| department    | varchar(100)  | YES  |     | NULL    |                |
+| position      | varchar(100)  | YES  |     | NULL    |                |
+| hire_date     | date          | YES  |     | NULL    |                |
+| salary        | decimal(10,2) | YES  |     | NULL    |                |
++---------------+---------------+------+-----+---------+----------------+
+7 rows in set (0.02 sec)
+
+mysql> INSERT INTO view_table (employee_id, employee_name, department, position, hire_date, salary)
+    -> VALUES (6, 'Eva Johnson', 'IT', 'Systems Analyst', '2024-04-15', 72000.00);
+Query OK, 1 row affected (0.32 sec)
+
+mysql> select * from view_table;
++---------+-------------+---------------+------------+-----------------+------------+----------+
+| view_id | employee_id | employee_name | department | position        | hire_date  | salary   |
++---------+-------------+---------------+------------+-----------------+------------+----------+
+|       1 |           6 | Eva Johnson   | IT         | Systems Analyst | 2024-04-15 | 72000.00 |
++---------+-------------+---------------+------------+-----------------+------------+----------+
+1 row in set (0.00 sec)
+
+11.Create table given below: Salesperson and Customer.
+
+mysql> create database company;
+Query OK, 1 row affected (0.32 sec)
+
+mysql> use company;
+Database changed
+mysql> create table SALESPERSON(SNO INT PRIMARY KEY DEFAULT 1001,SNAME VARCHAR(255),CITY VARCHAR(255),COMM DOUBLE);
+Query OK, 0 rows affected (3.21 sec)
+
+mysql> desc salesperson;
++-------+--------------+------+-----+---------+-------+
+| Field | Type         | Null | Key | Default | Extra |
++-------+--------------+------+-----+---------+-------+
+| SNO   | int          | NO   | PRI | 1001    |       |
+| SNAME | varchar(255) | YES  |     | NULL    |       |
+| CITY  | varchar(255) | YES  |     | NULL    |       |
+| COMM  | double       | YES  |     | NULL    |       |
++-------+--------------+------+-----+---------+-------+
+4 rows in set (0.10 sec)
+
+mysql> insert into salesperson(sno,sname,city,comm)
+    -> values('1001','peel','london','0.12'),
+    -> ('1002','serres','san jose','0.13'),
+    -> ('1004','motika','london','0.11'),
+    -> ('1007','rafkin','barcelona','0.15'),
+    -> ('1003','axelrod','new york','0.1');
+Query OK, 5 rows affected (0.16 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+mysql> DESC CUSTOMER;
++--------+--------------+------+-----+---------+-------+
+| Field  | Type         | Null | Key | Default | Extra |
++--------+--------------+------+-----+---------+-------+
+| cnm    | int          | NO   | PRI | 201     |       |
+| CNAME  | varchar(255) | YES  |     | NULL    |       |
+| CITY   | varchar(255) | YES  |     | NULL    |       |
+| RATING | int          | YES  |     | NULL    |       |
+| SNO    | int          | YES  | MUL | NULL    |       |
++--------+--------------+------+-----+---------+-------+
+5 rows in set (0.01 sec)
+
+mysql>
+       insert into customer(cnm,cname,city,rating,sno)
+    -> VALUES('201','hoffman','london','100','1001'),
+    ->  ('202','giovanne','roe','200','1003'),
+    ->  ('203','liu','san jose','300','1002'),
+    ->  ('204','grass','barcelona','100','1002'),
+    ->  ('206','clemens','london','300','1007'),
+    ->  ('207','pereira','roe','100','1004');
+Query OK, 6 rows affected (0.53 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+-----------+--------+------+
+| cnm | CNAME    | CITY      | RATING | SNO  |
++-----+----------+-----------+--------+------+
+| 201 | hoffman  | london    |    100 | 1001 |
+| 202 | giovanne | roe       |    200 | 1003 |
+| 203 | liu      | san jose  |    300 | 1002 |
+| 204 | grass    | barcelona |    100 | 1002 |
+| 206 | clemens  | london    |    300 | 1007 |
+| 207 | pereira  | roe       |    100 | 1004 |
++-----+----------+-----------+--------+------+
+6 rows in set (0.00 sec)
+
+14.Names and cities of all salespeople in London with commission above 0.12
+
+mysql> SELECT SNAME,CITY FROM SALESPERSON
+    -> WHERE COMM >0.12;
++--------+-----------+
+| SNAME  | CITY      |
++--------+-----------+
+| serres | san jose  |
+| rafkin | barcelona |
++--------+-----------+
+2 rows in set (0.05 sec)
+
+15.All salespeople either in Barcelona or in London
+
+mysql> SELECT SNAME FROM SALESPERSON
+    -> WHERE CITY = 'LONDON' OR CITY = 'BARCELONA';
++--------+
+| SNAME  |
++--------+
+| peel   |
+| motika |
+| rafkin |
++--------+
+3 rows in set (0.00 sec)
+
+16.All salespeople with commission between 0.10 and 0.12. (Boundary
+valuesshould be excluded).
+
+mysql> SELECT SNAME FROM SALESPERSON
+    -> WHERE COMM > 0.1 AND COMM < 0.12;
++--------+
+| SNAME  |
++--------+
+| motika |
++--------+
+1 row in set (0.00 sec)
+
+17.All customers excluding those with rating <= 100 unless they are located
+in Rome
+
+mysql> select * from customer;
++-----+----------+-----------+--------+------+
+| cnm | CNAME    | CITY      | RATING | SNO  |
++-----+----------+-----------+--------+------+
+| 201 | hoffman  | london    |    100 | 1001 |
+| 202 | giovanne | roe       |    200 | 1003 |
+| 203 | liu      | san jose  |    300 | 1002 |
+| 204 | grass    | barcelona |    100 | 1002 |
+| 206 | clemens  | london    |    300 | 1007 |
+| 207 | pereira  | roe       |    100 | 1004 |
++-----+----------+-----------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> UPDATE CUSTOMER
+    -> SET CITY = 'ROME'
+    -> WHERE CNM = 202;
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE CUSTOMER
+    -> SET CITY = 'ROME'
+    -> WHERE CNM = 207;
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM CUSTOMER;
++-----+----------+-----------+--------+------+
+| cnm | CNAME    | CITY      | RATING | SNO  |
++-----+----------+-----------+--------+------+
+| 201 | hoffman  | london    |    100 | 1001 |
+| 202 | giovanne | ROME      |    200 | 1003 |
+| 203 | liu      | san jose  |    300 | 1002 |
+| 204 | grass    | barcelona |    100 | 1002 |
+| 206 | clemens  | london    |    300 | 1007 |
+| 207 | pereira  | ROME      |    100 | 1004 |
++-----+----------+-----------+--------+------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT CNAME FROM CUSTOMER
+    -> WHERE RATING > 100 OR CITY = 'ROME';
++----------+
+| CNAME    |
++----------+
+| giovanne |
+| liu      |
+| clemens  |
+| pereira  |
++----------+
+4 rows in set (0.00 sec)
+
+18. Write a SQL statement that displays all the information about all
+salespeople
+
+mysql> create table salespeople(salesman_id int primary key,name varchar(255),city varchar(255),commission decimal );
+Query OK, 0 rows affected (7.33 sec)
+
+mysql> desc salespeople;
++-------------+---------------+------+-----+---------+-------+
+| Field       | Type          | Null | Key | Default | Extra |
++-------------+---------------+------+-----+---------+-------+
+| salesman_id | int           | NO   | PRI | NULL    |       |
+| name        | varchar(255)  | YES  |     | NULL    |       |
+| city        | varchar(255)  | YES  |     | NULL    |       |
+| commission  | decimal(10,0) | YES  |     | NULL    |       |
++-------------+---------------+------+-----+---------+-------+
+4 rows in set (0.86 sec)
+
+mysql> insert into salespeople(salesman_id,name,city,commission)
+    -> values('5001','James Hoog','New York','0.15'
+    -> ),
+    -> ('5002','nail knite','paris','0.13'),
+    -> ('5005','pit alex','london','0.11'),
+    -> ('5006','mc lyon','paris','0.14'),
+    -> ('5007','paul adam','rome','0.13'),
+    -> ('5003','lauson hen','san jose','0.12');
+Query OK, 6 rows affected, 6 warnings (0.45 sec)
+Records: 6  Duplicates: 0  Warnings: 6
+mysql> select * from salespeople;
++-------------+------------+----------+------------+
+| salesman_id | name       | city     | commission |
++-------------+------------+----------+------------+
+|        5001 | James Hoog | New York |          0 |
+|        5002 | nail knite | paris    |          0 |
+|        5003 | lauson hen | san jose |          0 |
+|        5005 | pit alex   | london   |          0 |
+|        5006 | mc lyon    | paris    |          0 |
+|        5007 | paul adam  | rome     |          0 |
++-------------+------------+----------+------------+
+6 rows in set (0.00 sec)
+
+mysql> ALTER TABLE SALESPEOPLE
+    -> MODIFY COMMISSION DECIMAL(10,2);
+Query OK, 6 rows affected (3.32 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> UPDATE salespeople
+    -> set commission = 0.13
+    -> where salesman_id = 5001;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE salespeople
+    -> set commission = 0.15
+    -> where salesman_id = 5001;
+Query OK, 1 row affected (0.20 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE salespeople
+    -> set commission = 0.13
+    -> where salesman_id = 5002;
+Query OK, 1 row affected (0.10 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE salespeople
+    -> set commission = 0.11
+    -> where salesman_id = 5005;
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE salespeople
+    -> set commission = 0.14
+    -> where salesman_id = 5006;
+Query OK, 1 row affected (0.12 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE salespeople
+    -> set commission = 0.13
+    -> where salesman_id = 5007;
+Query OK, 1 row affected (0.16 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE salespeople
+    -> set commission = 0.12
+    -> where salesman_id = 5003;
+Query OK, 1 row affected (0.11 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from selespeople;
+ERROR 1146 (42S02): Table 'company.selespeople' doesn't exist
+mysql> select * from salespeople;
++-------------+------------+----------+------------+
+| salesman_id | name       | city     | COMMISSION |
++-------------+------------+----------+------------+
+|        5001 | James Hoog | New York |       0.15 |
+|        5002 | nail knite | paris    |       0.13 |
+|        5003 | lauson hen | san jose |       0.12 |
+|        5005 | pit alex   | london   |       0.11 |
+|        5006 | mc lyon    | paris    |       0.14 |
+|        5007 | paul adam  | rome     |       0.13 |
++-------------+------------+----------+------------+
+6 rows in set (0.00 sec)
+
+19. From the following table, write a SQL query to find orders that are
+delivered by a salesperson with ID. 5001. Return ord_no, ord_date,
+purch_amt.
+
+mysql> CREATE TABLE orders (
+    ->     ord_no INT PRIMARY KEY,
+    ->     purch_amt DECIMAL(10,2),
+    ->     ord_date DATE,
+    ->     customer_id INT NOT NULL,
+    ->     salesman_id INT,
+    ->     FOREIGN KEY (salesman_id) REFERENCES salespeople(salesman_id)
+    -> );
+Query OK, 0 rows affected (2.21 sec)
+
+mysql> INSERT INTO orders (ord_no, purch_amt, ord_date, customer_id, salesman_id) VALUES
+    -> (70001, 150.5, '2012-10-05', 3005, 5002),
+    -> (70009, 270.65, '2012-09-10', 3001, 5005),
+    -> (70002, 65.26, '2012-10-05', 3002, 5001),
+    -> (70004, 110.5, '2012-08-17', 3009, 5003),
+    -> (70007, 948.5, '2012-09-10', 3005, 5002),
+    -> (70005, 2400.6, '2012-07-27', 3007, 5001),
+    -> (70008, 5760, '2012-09-10', 3002, 5001),
+    -> (70010, 1983.43, '2012-10-10', 3004, 5006),
+    -> (70003, 2480.4, '2012-10-10', 3009, 5003),
+    -> (70012, 250.45, '2012-06-27', 3008, 5002),
+    -> (70011, 75.29, '2012-08-17', 3003, 5007),
+    -> (70013, 3045.6, '2012-04-25', 3002, 5001);
+Query OK, 12 rows affected (0.19 sec)
+Records: 12  Duplicates: 0  Warnings: 0
+
+mysql> select * from orders;
++--------+-----------+------------+-------------+-------------+
+| ord_no | purch_amt | ord_date   | customer_id | salesman_id |
++--------+-----------+------------+-------------+-------------+
+|  70001 |    150.50 | 2012-10-05 |        3005 |        5002 |
+|  70002 |     65.26 | 2012-10-05 |        3002 |        5001 |
+|  70003 |   2480.40 | 2012-10-10 |        3009 |        5003 |
+|  70004 |    110.50 | 2012-08-17 |        3009 |        5003 |
+|  70005 |   2400.60 | 2012-07-27 |        3007 |        5001 |
+|  70007 |    948.50 | 2012-09-10 |        3005 |        5002 |
+|  70008 |   5760.00 | 2012-09-10 |        3002 |        5001 |
+|  70009 |    270.65 | 2012-09-10 |        3001 |        5005 |
+|  70010 |   1983.43 | 2012-10-10 |        3004 |        5006 |
+|  70011 |     75.29 | 2012-08-17 |        3003 |        5007 |
+|  70012 |    250.45 | 2012-06-27 |        3008 |        5002 |
+|  70013 |   3045.60 | 2012-04-25 |        3002 |        5001 |
++--------+-----------+------------+-------------+-------------+
+12 rows in set (0.00 sec)
+
+mysql> select ord_no,ord_date,purch_amt
+    -> from orders
+    -> where salesman_id = '5001';
++--------+------------+-----------+
+| ord_no | ord_date   | purch_amt |
++--------+------------+-----------+
+|  70002 | 2012-10-05 |     65.26 |
+|  70005 | 2012-07-27 |   2400.60 |
+|  70008 | 2012-09-10 |   5760.00 |
+|  70013 | 2012-04-25 |   3045.60 |
++--------+------------+-----------+
+4 rows in set (0.00 sec)
+
+20. From the following table, write a SQL query to select a range of
+products whose price is in the range Rs.200 to Rs.600. Begin and end
+values are included. Return pro_id, pro_name, pro_price, and pro_com.
+
+mysql> create table item_must(PRO_ID INT PRIMARY KEY,PRO_NAME VARCHAR(255),PRO_PRICE DECIMAL(10,2),PRO_COM INT);
+Query OK, 0 rows affected (1.03 sec)
+
+
+
+
+
+
+
+
+mysql> INSERT INTO item_must (PRO_ID, PRO_NAME, PRO_PRICE, PRO_COM) VALUES
+    -> (101, 'Mother Board', 3200.00, 15),
+    -> (102, 'Key Board', 450.00, 16),
+    -> (103, 'ZIP drive', 250.00, 14),
+    -> (104, 'Speaker', 550.00, 16),
+    -> (105, 'Monitor', 5000.00, 11),
+    -> (106, 'DVD drive', 900.00, 12),
+    -> (107, 'CD drive', 800.00, 12),
+    -> (108, 'Printer', 2600.00, 13),
+    -> (109, 'Refill cartridge', 350.00, 13),
+    -> (110, 'Mouse', 250.00, 12);
+Query OK, 10 rows affected (0.30 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM ITEM_MUST;
++--------+------------------+-----------+---------+
+| PRO_ID | PRO_NAME         | PRO_PRICE | PRO_COM |
++--------+------------------+-----------+---------+
+|    101 | Mother Board     |   3200.00 |      15 |
+|    102 | Key Board        |    450.00 |      16 |
+|    103 | ZIP drive        |    250.00 |      14 |
+|    104 | Speaker          |    550.00 |      16 |
+|    105 | Monitor          |   5000.00 |      11 |
+|    106 | DVD drive        |    900.00 |      12 |
+|    107 | CD drive         |    800.00 |      12 |
+|    108 | Printer          |   2600.00 |      13 |
+|    109 | Refill cartridge |    350.00 |      13 |
+|    110 | Mouse            |    250.00 |      12 |
++--------+------------------+-----------+---------+
+10 rows in set (0.00 sec)
+
+mysql> SELECT * FROM ITEM_MUST
+    -> WHERE PRO_PRICE >= '200'AND PRO_PRICE<= '600';
++--------+------------------+-----------+---------+
+| PRO_ID | PRO_NAME         | PRO_PRICE | PRO_COM |
++--------+------------------+-----------+---------+
+|    102 | Key Board        |    450.00 |      16 |
+|    103 | ZIP drive        |    250.00 |      14 |
+|    104 | Speaker          |    550.00 |      16 |
+|    109 | Refill cartridge |    350.00 |      13 |
+|    110 | Mouse            |    250.00 |      12 |
++--------+------------------+-----------+---------+
+5 rows in set (0.04 sec)
+
+21. From the following table, write a SQL query to calculate the average
+price for a manufacturer code of 16. Return avg.
+
+mysql> select avg(pro_price)as average_price
+    -> from item_must
+    -> where pro_com ='16';
++---------------+
+| average_price |
++---------------+
+|    500.000000 |
++---------------+
+1 row in set (0.00 sec)
+
+22. From the following table, write a SQL query to display the pro_name
+as 'Item Name' and pro_priceas 'Price in Rs.'
+
+mysql> select
+    -> PRO_NAME as 'Item Name',
+    -> PRO_PRICE as 'Price_in_Rs'
+    -> from item_must;
++------------------+-------------+
+| Item Name        | Price_in_Rs |
++------------------+-------------+
+| Mother Board     |     3200.00 |
+| Key Board        |      450.00 |
+| ZIP drive        |      250.00 |
+| Speaker          |      550.00 |
+| Monitor          |     5000.00 |
+| DVD drive        |      900.00 |
+| CD drive         |      800.00 |
+| Printer          |     2600.00 |
+| Refill cartridge |      350.00 |
+| Mouse            |      250.00 |
++------------------+-------------+
+10 rows in set (0.00 sec)
+
+
+23. From the following table, write a SQL query to find the items whose
+prices are higher than or equal to $250. Order the result by product price in
+descending, then product name in ascending. Return pro_name and
+pro_price
+
+mysql> select PRO_NAME,PRO_PRICE
+    -> from item_must
+    -> where PRO_PRICE >= '250'
+    -> order by PRO_PRICE desc;
++------------------+-----------+
+| PRO_NAME         | PRO_PRICE |
++------------------+-----------+
+| Monitor          |   5000.00 |
+| Mother Board     |   3200.00 |
+| Printer          |   2600.00 |
+| DVD drive        |    900.00 |
+| CD drive         |    800.00 |
+| Speaker          |    550.00 |
+| Key Board        |    450.00 |
+| Refill cartridge |    350.00 |
+| ZIP drive        |    250.00 |
+| Mouse            |    250.00 |
++------------------+-----------+
+10 rows in set (0.00 sec)
+
+mysql> select PRO_NAME,PRO_PRICE
+    -> from item_must
+    -> where PRO_PRICE >= '250'
+    -> order by PRO_NAME asc;
++------------------+-----------+
+| PRO_NAME         | PRO_PRICE |
++------------------+-----------+
+| CD drive         |    800.00 |
+| DVD drive        |    900.00 |
+| Key Board        |    450.00 |
+| Monitor          |   5000.00 |
+| Mother Board     |   3200.00 |
+| Mouse            |    250.00 |
+| Printer          |   2600.00 |
+| Refill cartridge |    350.00 |
+| Speaker          |    550.00 |
+| ZIP drive        |    250.00 |
++------------------+-----------+
+10 rows in set (0.04 sec)
+
+mysql> select PRO_NAME,PRO_PRICE
+    -> from item_must
+    -> where PRO_PRICE >= '250'
+    -> order by PRO_PRICE desc, PRO_NAME asc;
++------------------+-----------+
+| PRO_NAME         | PRO_PRICE |
++------------------+-----------+
+| Monitor          |   5000.00 |
+| Mother Board     |   3200.00 |
+| Printer          |   2600.00 |
+| DVD drive        |    900.00 |
+| CD drive         |    800.00 |
+| Speaker          |    550.00 |
+| Key Board        |    450.00 |
+| Refill cartridge |    350.00 |
+| Mouse            |    250.00 |
+| ZIP drive        |    250.00 |
++------------------+-----------+
+10 rows in set (0.00 sec)
+
+24. From the following table, write a SQL query to calculate average price of 
+the items for each company. Return average price and companycode.
+
+mysql> select
+    -> avg(PRO_PRICE) as 'average_pice',
+    -> pro_com as 'company_code'
+    -> from item_must
+    -> group by
+    -> pro_com;
++--------------+--------------+
+| average_pice | company_code |
++--------------+--------------+
+|  3200.000000 |           15 |
+|   500.000000 |           16 |
+|   250.000000 |           14 |
+|  5000.000000 |           11 |
+|   650.000000 |           12 |
+|  1475.000000 |           13 |
++--------------+--------------+
+6 rows in set (0.28 sec)
+
+
+
+
+
+
+
+
+
+
+
+
